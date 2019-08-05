@@ -226,10 +226,10 @@ class XokamController extends AbstractController
         $user=$userRepo->findOneByUsername($values->username);
         echo $user->getStatut();
         if($user->getStatut()=="bloquer"){
-            if($user->getProfil()=="admin"){
+            if($user->getProfil()==7){
                 $user->setRoles(["ROLE_ADMIN"]);
             }
-            elseif($user->getProfil()=="user"){
+            elseif($user->getProfil()==8){
                 $user->setRoles(["ROLE_USER"]);
             }
             $user->setStatut("debloquer");
@@ -247,5 +247,6 @@ class XokamController extends AbstractController
         return new JsonResponse($data);
     }
 
+    
 }
 

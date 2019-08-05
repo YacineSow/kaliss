@@ -62,14 +62,14 @@ class DepotController extends AbstractController
     
                 return new JsonResponse($data, 201);
 
-                $data1 = [
-                    'status' => 500,
-                    'message' => 'Vous devez renseigner les champs montants et idcompte'
-                ];
-                return new JsonResponse($data, 500);
+                
             }
             else{
-                echo 'Le montant doit etre superieur à 75000';
+                $data1 = [
+                    'status' => 500,
+                    'message' => 'Le montant doit etre superieur à 75000'
+                ];
+                return new JsonResponse($data1, 500);
             }
         }
 
