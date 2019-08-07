@@ -32,20 +32,41 @@ class UserController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
+        $values=$request->request->all();
+        $form->submit($values);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $repo=$this->getDoctrine()->getRepository(Partenaire::class);
+        $partenaires=$repo->find($values->partenaire);
+        $user->setPartenaire($partenaires);
+        
+        $repos=$this->getDoctrine()->getRepository(Profil::class);
+        $profils=$repos->find($values->profil);
+        $user->setProfil($profils);
+        $role=[];
+        if($profils->getLibelle() == "admin"){
+          $role=["ROLE_ADMIN"];  
+        }
+        elseif($profils->getLibelle() == "caissiere"){
+            $role=["ROLE_CAISSIERE"];
+        }
+        elseif($profils->getLibelle() == "user"){
+            $role=["ROLE_USER"];
+        }
+        $user->setRoles($role);
+
+        $repos=$this->getDoctrine()->getRepository(Compte::class);
+        $compte=$repos->find($values->compte);
+        $user->setCompte($compte);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index');
-        }
 
-        return $this->render('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+        
+
+        return new Response('Utilisateur creer');
     }
 
     /**
