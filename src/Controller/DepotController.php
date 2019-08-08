@@ -3,12 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Depot;
+use App\Entity\Compte;
 use App\Form\DepotType;
 use App\Repository\DepotRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/depot")
@@ -28,24 +32,57 @@ class DepotController extends AbstractController
     /**
      * @Route("/new", name="depot_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $depot = new Depot();
-        $form = $this->createForm(DepotType::class, $depot);
-        $form->handleRequest($request);
+        $values=$request->request->all();
+        if(($values["montant"])>=75000){
+            $form = $this->createForm(DepotType::class, $depot);
+            $form->handleRequest($request);
+            
+            $form->submit($values);
+    
+            if ($form->isSubmitted()) {
+                $depot->setDate(new \DateTime());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($depot);
-            $entityManager->flush();
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($depot);
+                $entityManager->flush();
 
-            return $this->redirectToRoute('depot_index');
+                //recuperation de l'id du compte
+            $repo=$this->getDoctrine()->getRepository(Compte::class);
+            $comptes=$repo->find($values["compte"]);
+            $depot->setCompte($comptes);
+
+                 $entityManager->persist($depot);
+                 $entityManager->flush();
+
+                //incrementant du solde du compte
+                $comptes->setSolde($comptes->getSolde()+$values["montant"]);
+
+                //enregistrement au niveau du compte
+                $entityManager->persist($comptes);
+
+                //enregistrement au niveau du depot
+               $entityManager->persist($depot);
+                $entityManager->flush();
+    
+                $data = [
+                    'statu' => 201,
+                    'messag' => 'Le depot a été effectué'
+                ];
+        
+                return new JsonResponse($data, 201);
+            }
         }
 
-        return $this->render('depot/new.html.twig', [
-            'depot' => $depot,
-            'form' => $form->createView(),
-        ]);
+
+        $data = [
+            'statu' => 500,
+            'messag' => 'le montant doit etre superieur a 75000'
+        ];
+
+        return new JsonResponse($data, 500);
     }
 
     /**

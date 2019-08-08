@@ -38,8 +38,8 @@ security:
         #  - { path: ^/profile, roles: ROLE_USER }
         # - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/register, roles: ROLE_ADMIN }
-        - { path: ^/api/addpartuser, roles: ROLE_SUPER_ADMIN}
-        - { path: ^/api/depots, roles: ROLE_CAISSIERE}
+        - { path: ^/user/new, roles: ROLE_ADMIN }
+        - { path: ^/partenaire/new, roles: ROLE_SUPER_ADMIN}
+        - { path: ^/depot/new, roles: ROLE_CAISSIERE}
         - { path: ^/api/users/bloquer, roles: ROLE_SUPER_ADMIN}
         - { path: ^/api/users/debloquer, roles: ROLE_SUPER_ADMIN}

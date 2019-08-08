@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class SuperAdminFixtures extends Fixture
 {
@@ -26,6 +27,8 @@ class SuperAdminFixtures extends Fixture
         $user->setTelephone(772795723);
         $user->setAdresse("Sebikotane");
         $user->setCni(112519951236);
+        $user->setImageName("image.png");
+        $user->setUpdatedAt(new \DateTime());
         $manager->persist($user);
         $manager->flush();
     }

@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Compte;
 use App\Form\CompteType;
+use App\Entity\Partenaire;
 use App\Repository\CompteRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/compte")
@@ -31,21 +33,37 @@ class CompteController extends AbstractController
     public function new(Request $request): Response
     {
         $compte = new Compte();
+        $random=random_int(1000000,9999999);
         $form = $this->createForm(CompteType::class, $compte);
         $form->handleRequest($request);
+        $values=$request->request->all();
+        $form->submit($values);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
+            
+            $compte->setNumcompte($random);
+
+            $repo=$this->getDoctrine()->getRepository(Partenaire::class);
+            $partenaires=$repo->find($values["partenaire"]);
+            $compte->setPartenaire($partenaires);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($compte);
             $entityManager->flush();
 
-            return $this->redirectToRoute('compte_index');
+            $data = [
+                'statu' => 201,
+                'messag' => 'Le compte a été créé'
+            ];
+    
+            return new JsonResponse($data, 201);
         }
+        $data = [
+            'statu' => 500,
+            'messag' => 'Erreur lors de l\'insertion'
+        ];
 
-        return $this->render('compte/new.html.twig', [
-            'compte' => $compte,
-            'form' => $form->createView(),
-        ]);
+        return new JsonResponse($data, 500);
     }
 
     /**

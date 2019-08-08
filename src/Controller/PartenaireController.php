@@ -2,15 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Partenaire;
 use App\Entity\User;
+use App\Entity\Compte;
+use App\Entity\Profil;
+use App\Form\UserType;
+use App\Form\CompteType;
+use App\Entity\Partenaire;
 use App\Form\PartenaireType;
 use App\Repository\PartenaireRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Form\UserType;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/partenaire")
@@ -30,50 +36,78 @@ class PartenaireController extends AbstractController
     /**
      * @Route("/new", name="partenaire_new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
-    {   $random = random_int();
+    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    {   
+        
+        $random=random_int(1000000,9999999);
         $partenaire = new Partenaire();
         $form = $this->createForm(PartenaireType::class, $partenaire);
         $data=$request->request->all();
         $form->submit($data);
+        $partenaire->setStatut("debloquer");
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($partenaire);
         $entityManager->flush();
 
             $user = new User ();
             $form = $this->createForm(UserType::class, $user);
-            $data=$request->request->all();
-            $form->submit($data);
             $form->handleRequest($request);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            $profil = new Profil ();
-            $form = $this->createForm(ProfilType::class, $profil);
-            $data=$request->request->all();
-            $profil->setRoles(['ROLE_ADMIN']);
-            $form->submit($data);
-            //$form->handleRequest($request);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($profil);
-            $entityManager->flush();
+            $values=$request->request->all();
+            $form->submit($values);
+            
+            $file=$request->files->all()['imageName'];
+    
+        if ($form->isSubmitted() ) {
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                ));
+                
+                $user->setPartenaire($partenaire);
+                $user->setImageFile($file);
+    
+                $repos=$this->getDoctrine()->getRepository(Profil::class);
+                $profils=$repos->find($values['profil']);
+                $user->setProfil($profils);
+    
+                if($profils->getLibelle() == "admin"){
+                    $user->setRoles(["ROLE_ADMIN"]);  
+                }
+                
+                $user->setStatut("debloquer");
+    
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($user);
+                $entityManager->flush();
 
             $compte = new Compte ();
             $form = $this->createForm(CompteType::class, $compte);
+            $form->handleRequest($request);
             $data=$request->request->all();
             $form->submit($data);
-            $form->handleRequest($request);
+            $compte->setNumcompte($random);
+            $compte->setPartenaire($partenaire);
+            $user->setCompte($compte);
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($compte);
             $entityManager->flush();
+            
+            $data = [
+                'statu' => 201,
+                'messag' => 'Le partenaire a été créé'
+            ];
+    
+            return new JsonResponse($data, 201);
+        }  
+        $data = [
+            'statu' => 500,
+            'messag' => 'Erreur lors de l\'insertion'
+        ];
 
-
-        // return $this->render('partenaire/new.html.twig', [
-        //     'partenaire' => $partenaire,
-        //     'form' => $form->createView(),
-        // ]);
-            return new Response('Lepartenaire a été ajouté');
+        return new JsonResponse($data, 500);  
     }
 
     /**

@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Compte;
+use App\Entity\Partenaire;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CompteType extends AbstractType
@@ -14,7 +16,7 @@ class CompteType extends AbstractType
         $builder
             ->add('numcompte')
             ->add('solde')
-            ->add('partenaire')
+            ->add('partenaire', EntityType::class, ['class'=>Partenaire::class])
         ;
     }
 
