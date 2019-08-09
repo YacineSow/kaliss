@@ -2596,7 +2596,7 @@
       <call method="add">
         <argument type="service" id=".security.request_matcher.BDlN.QK"/>
         <argument type="collection">
-          <argument>ROLE_CAISSIERE</argument>
+          <argument>ROLE_CAISSIER</argument>
         </argument>
         <argument>null</argument>
       </call>

@@ -40,6 +40,6 @@ security:
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/user/new, roles: ROLE_ADMIN }
         - { path: ^/partenaire/new, roles: ROLE_SUPER_ADMIN}
-        - { path: ^/depot/new, roles: ROLE_CAISSIERE}
+        - { path: ^/depot/new, roles: ROLE_CAISSIER}
         - { path: ^/api/users/bloquer, roles: ROLE_SUPER_ADMIN}
         - { path: ^/api/users/debloquer, roles: ROLE_SUPER_ADMIN}

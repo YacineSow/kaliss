@@ -62,19 +62,18 @@ class PartenaireController extends AbstractController
                 $user->setPassword(
                     $passwordEncoder->encodePassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 ));
                 
                 $user->setPartenaire($partenaire);
                 $user->setImageFile($file);
     
-                $repos=$this->getDoctrine()->getRepository(Profil::class);
-                $profils=$repos->find($values['profil']);
-                $user->setProfil($profils);
-    
-                if($profils->getLibelle() == "admin"){
+               // $repos=$this->getDoctrine()->getRepository(Profil::class);
+              //  $profils=$repos->find($values['profil']);
+              //  $user->setProfil($profils);
+               // if($profils->getLibelle() == "admin"){
                     $user->setRoles(["ROLE_ADMIN"]);  
-                }
+               // }
                 
                 $user->setStatut("debloquer");
     
