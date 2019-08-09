@@ -32,7 +32,7 @@ return [
     'xokam' => [[], ['_controller' => 'App\\Controller\\XokamController::index'], [], [['text', '/api/xokam']], [], []],
     'register' => [[], ['_controller' => 'App\\Controller\\XokamController::register'], [], [['text', '/api/register']], [], []],
     'add' => [[], ['_controller' => 'App\\Controller\\XokamController::addpartuser'], [], [['text', '/api/addpartuser']], [], []],
-    'login' => [[], ['_controller' => 'App\\Controller\\XokamController::login'], [], [['text', '/api/login']], [], []],
+    'login' => [[], ['_controller' => 'App\\Controller\\XokamController::login'], [], [['text', '/api/login_check']], [], []],
     'profil' => [[], ['_controller' => 'App\\Controller\\XokamController::addprofil'], [], [['text', '/api/profil']], [], []],
     'compte' => [[], ['_controller' => 'App\\Controller\\XokamController::addcompte'], [], [['text', '/api/compte']], [], []],
     'userBlock' => [[], ['_controller' => 'App\\Controller\\XokamController::userBloquer'], [], [['text', '/api/users/bloquer']], [], []],

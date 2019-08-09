@@ -68,12 +68,8 @@ class PartenaireController extends AbstractController
                 $user->setPartenaire($partenaire);
                 $user->setImageFile($file);
     
-               // $repos=$this->getDoctrine()->getRepository(Profil::class);
-              //  $profils=$repos->find($values['profil']);
-              //  $user->setProfil($profils);
-               // if($profils->getLibelle() == "admin"){
                     $user->setRoles(["ROLE_ADMIN"]);  
-               // }
+               
                 
                 $user->setStatut("debloquer");
     

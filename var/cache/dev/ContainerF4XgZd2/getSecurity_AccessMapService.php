@@ -13,9 +13,9 @@ include_once $this->targetDirs[3].'/vendor/symfony/http-foundation/RequestMatche
 
 $this->privates['security.access_map'] = $instance = new \Symfony\Component\Security\Http\AccessMap();
 
-$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/register'), [0 => 'ROLE_ADMIN'], NULL);
-$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/addpartuser'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
-$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/depots'), [0 => 'ROLE_CAISSIERE'], NULL);
+$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/user/new'), [0 => 'ROLE_ADMIN'], NULL);
+$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/partenaire/new'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
+$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/depot/new'), [0 => 'ROLE_CAISSIER'], NULL);
 $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/users/bloquer'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
 $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/users/debloquer'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
 

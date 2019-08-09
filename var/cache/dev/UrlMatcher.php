@@ -21,12 +21,14 @@ return [
         '/api/xokam' => [[['_route' => 'xokam', '_controller' => 'App\\Controller\\XokamController::index'], null, null, null, false, false, null]],
         '/api/register' => [[['_route' => 'register', '_controller' => 'App\\Controller\\XokamController::register'], null, ['POST' => 0], null, false, false, null]],
         '/api/addpartuser' => [[['_route' => 'add', '_controller' => 'App\\Controller\\XokamController::addpartuser'], null, ['POST' => 0], null, false, false, null]],
-        '/api/login' => [[['_route' => 'login', '_controller' => 'App\\Controller\\XokamController::login'], null, ['POST' => 0], null, false, false, null]],
+        '/api/login_check' => [
+            [['_route' => 'login', '_controller' => 'App\\Controller\\XokamController::login'], null, ['POST' => 0], null, false, false, null],
+            [['_route' => 'api_login_check'], null, null, null, false, false, null],
+        ],
         '/api/profil' => [[['_route' => 'profil', '_controller' => 'App\\Controller\\XokamController::addprofil'], null, ['POST' => 0], null, false, false, null]],
         '/api/compte' => [[['_route' => 'compte', '_controller' => 'App\\Controller\\XokamController::addcompte'], null, ['POST' => 0], null, false, false, null]],
         '/api/users/bloquer' => [[['_route' => 'userBlock', '_controller' => 'App\\Controller\\XokamController::userBloquer'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/api/users/debloquer' => [[['_route' => 'userDeblock', '_controller' => 'App\\Controller\\XokamController::userBloquer'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
-        '/api/login_check' => [[['_route' => 'api_login_check'], null, null, null, false, false, null]],
     ],
     [ // $regexpList
         0 => '{^(?'

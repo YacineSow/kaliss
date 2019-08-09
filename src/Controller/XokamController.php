@@ -6,9 +6,9 @@ use App\Entity\Compte;
 use App\Entity\Profil;
 use App\Entity\Partenaire;
 use App\Repository\UserRepository;
+use App\Repository\CompteRepository;
 use App\Repository\ProfilRepository;
 use App\Repository\PartenaireRepository;
-use App\Repository\CompteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -161,17 +162,55 @@ class XokamController extends AbstractController
 
         return new JsonResponse($data, 201);
     }
+    private $encoder;
+
+    public function __construct(UserPasswordEncoderInterface $encoder)
+    {
+      $this->encoder = $encoder;
+    }
 
     /**
-     * @Route("/login", name="login", methods={"POST"})
+     * @Route("/login_check", name="login", methods={"POST"})
+     * @param JWTEncoderInterface $JWTEncoder
+     * @throws \Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTEncodeFailureException
      */
-    public function login(Request $request)
-    {
-        $user = $this->getUser();
-        return $this->json([
-            'username' => $user->getUsername(),
-            'roles' => $user->getRoles()
-        ]);
+    public function login(Request $request, JWTEncoderInterface  $JWTEncoder)
+    { 
+   
+       $values = json_decode($request->getContent());
+        $username   = $values->username;
+        $password   = $values->password;
+        
+
+            $repo = $this->getDoctrine()->getRepository(User::class);
+            $user = $repo-> findOneBy(['username' => $username]);
+            if(!$user){
+                return $this->json([
+                        'messag' => 'Username incorrect'
+                    ]);
+            }
+
+            $isValid = $this->encoder
+            ->isPasswordValid($user, $password);
+            if(!$isValid){ 
+                return $this->json([
+                    'messag' => 'Mot de passe incorect'
+                ]);
+            }
+            if($user->getStatut()!=null && $user->getStatut()=="bloquer"){
+                return $this->json([
+                    'messag' => 'ACCÈS REFUSÉ vous ne pouvez pas connecter !'
+                ]);
+            }
+            $token = $JWTEncoder->encode([
+                'username' => $user->getUsername(),
+                'exp' => time() + 86400 // 1 day expiration
+            ]);
+
+            return $this->json([
+                'token' => $token
+            ]);
+                
     }
 
     /**
@@ -209,8 +248,8 @@ class XokamController extends AbstractController
 
         $entityManager->flush();
         $data = [
-            'status' => 201,
-            'message' => 'Le compte a bien été ajouté'
+            'statu' => 201,
+            'messag' => 'Le compte a bien été ajouté'
         ];
         return new JsonResponse($data, 201);
     }
@@ -226,25 +265,24 @@ class XokamController extends AbstractController
         $user=$userRepo->findOneByUsername($values->username);
         echo $user->getStatut();
         if($user->getStatut()=="bloquer"){
-            if($user->getProfil()== "admin"){
-                $user->setRoles(["ROLE_ADMIN"]);
-            }
-            elseif($user->getProfil()== "user"){
-                $user->setRoles(["ROLE_USER"]);
-            }
             $user->setStatut("debloquer");
+            $entityManager->flush();
+            $data = [
+                'status' => 200,
+                'message' => 'utilisateur a été débloqué'
+            ];
+            return new JsonResponse($data);
         }
+        
         else{
             $user->setStatut("bloquer");
-            $user->setRoles(["ROLE_USERLOCK"]);
+            $entityManager->flush();
+            $data = [
+                'status' => 200,
+                'message' => 'utilisateur a été bloqué'
+            ];
+            return new JsonResponse($data);
         }
-
-        $entityManager->flush();
-        $data = [
-            'status' => 200,
-            'message' => 'utilisateur a changé de statut (bloqué/débloqué)'
-        ];
-        return new JsonResponse($data);
     }
 
     

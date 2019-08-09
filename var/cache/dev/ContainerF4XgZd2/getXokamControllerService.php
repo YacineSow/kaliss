@@ -10,7 +10,7 @@ include_once $this->targetDirs[3].'/vendor/symfony/framework-bundle/Controller/C
 include_once $this->targetDirs[3].'/vendor/symfony/framework-bundle/Controller/AbstractController.php';
 include_once $this->targetDirs[3].'/src/Controller/XokamController.php';
 
-$this->services['App\\Controller\\XokamController'] = $instance = new \App\Controller\XokamController();
+$this->services['App\\Controller\\XokamController'] = $instance = new \App\Controller\XokamController(($this->services['security.password_encoder'] ?? $this->load('getSecurity_PasswordEncoderService.php')));
 
 $instance->setContainer(($this->privates['.service_locator.CDOTD6.'] ?? $this->load('get_ServiceLocator_CDOTD6_Service.php'))->withContext('App\\Controller\\XokamController', $this));
 
