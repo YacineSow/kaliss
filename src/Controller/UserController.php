@@ -60,13 +60,13 @@ class UserController extends AbstractController
             $profils=$repos->find($values['profil']);
             $user->setProfil($profils);
 
-            if($profils->getLibelle() == "admin"){
+            if($profils->getLibelle() == "ADMIN"){
                 $user->setRoles(["ROLE_ADMIN"]);  
             }
-            elseif($profils->getLibelle() == "caissiere"){
-                $user->setRoles(["ROLE_CAISSIERE"]);
+            elseif($profils->getLibelle() == "CAISSIER"){
+                $user->setRoles(["ROLE_CAISSIER"]);
             }
-            elseif($profils->getLibelle() == "user"){
+            elseif($profils->getLibelle() == "USER"){
                 $user->setRoles(["ROLE_USER"]);
             }
             
@@ -75,9 +75,8 @@ class UserController extends AbstractController
             $repos=$this->getDoctrine()->getRepository(Partenaire::class);
             $partenaire=$repos->find($values['partenaire']);
             $user->setPartenaire($partenaire);                
-            // $this->getUser()->getPartenaire();
-                // var_dump($this->getUser());
-                // die();
+            $this->getUser()->getPartenaire();
+ 
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);
                 $entityManager->flush();

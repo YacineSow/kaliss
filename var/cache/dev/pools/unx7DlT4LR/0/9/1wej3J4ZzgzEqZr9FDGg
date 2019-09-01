@@ -29,6 +29,7 @@ return $getExpiry ? PHP_INT_MAX : Hydrator::hydrate(
                     'imageFile',
                     'imageName',
                     'updatedAt',
+                    'transactions',
                 ],
             ],
         ],

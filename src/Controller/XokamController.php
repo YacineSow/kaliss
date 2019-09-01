@@ -263,7 +263,9 @@ class XokamController extends AbstractController
     {
         $values = json_decode($request->getContent());
         $user=$userRepo->findOneByUsername($values->username);
+        
         echo $user->getStatut();
+
         if($user->getStatut()=="bloquer"){
             $user->setStatut("debloquer");
             $entityManager->flush();

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -68,7 +69,7 @@ class PartenaireController extends AbstractController
                 $user->setPartenaire($partenaire);
                 $user->setImageFile($file);
     
-                    $user->setRoles(["ROLE_ADMIN"]);  
+                $user->setRoles(["ROLE_ADMIN"]);  
                
                 
                 $user->setStatut("debloquer");
@@ -148,4 +149,5 @@ class PartenaireController extends AbstractController
 
         return $this->redirectToRoute('partenaire_index');
     }
+
 }
