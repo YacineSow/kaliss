@@ -12,9 +12,9 @@ class ExpediteurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('telephone')
+            ->add('nomexpediteur')
+            ->add('prenomexpediteur')
+            ->add('telephoneexpediteur')
         ;
     }
 

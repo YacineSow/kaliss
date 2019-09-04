@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
@@ -17,31 +18,37 @@ class Partenaire
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Groups({"liste"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste"})
      */
     private $entreprise;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste"})
      */
     private $raisonsocial;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste"})
      */
     private $ninea;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Groups({"liste"})
      */
-    private $adresse;
+    private $adressesociete;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"liste"})
      */
     private $statut;
 
@@ -102,14 +109,14 @@ class Partenaire
         return $this;
     }
 
-    public function getAdresse(): ?string
+    public function getAdressesociete(): ?string
     {
-        return $this->adresse;
+        return $this->adressesociete;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setAdressesociete(string $adressesociete): self
     {
-        $this->adresse = $adresse;
+        $this->adressesociete = $adressesociete;
 
         return $this;
     }

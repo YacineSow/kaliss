@@ -14,9 +14,6 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        # main:
-        #     json_login:
-        #         check_path: /api/login_check
 
         login:
             pattern:  ^/api/login
@@ -35,6 +32,10 @@ security:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
 
+        main:
+            json_login:
+                check_path: /api/login_check
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
@@ -42,10 +43,10 @@ security:
         #  - { path: ^/profile, roles: ROLE_USER }
         # - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/user/new, roles: ROLE_ADMIN }
-        - { path: ^/partenaire/new, roles: ROLE_SUPER_ADMIN}
+        - { path: ^/api/new, roles: ROLE_ADMIN }
+        - { path: ^/api/ajoutpartenaire, roles: ROLE_SUPER_ADMIN}
         - { path: ^/depot/new, roles: ROLE_CAISSIER}
-        # - { path: ^/api/users/bloquer, roles: ROLE_SUPER_ADMIN}
-        # - { path: ^/api/users/debloquer, roles: ROLE_SUPER_ADMIN}
-        - { path: ^/transaction/new, roles: ROLE_USER}
+        - { path: ^/api/users/bloquer, roles: ROLE_SUPER_ADMIN}
+        - { path: ^/api/users/debloquer, roles: ROLE_SUPER_ADMIN}
+        - { path: ^/api/transaction, roles: ROLE_USER}
         

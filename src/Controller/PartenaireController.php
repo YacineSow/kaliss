@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/partenaire")
+ * @Route("/api")
  */
 class PartenaireController extends AbstractController
 {
@@ -35,7 +35,7 @@ class PartenaireController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="partenaire_new", methods={"GET","POST"})
+     * @Route("/ajoutpartenaire", name="partenaire_new", methods={"POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
     {   

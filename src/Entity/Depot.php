@@ -11,6 +11,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Depot
 {
+    public function __toString()
+    {
+        return $this->montant;
+    }
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

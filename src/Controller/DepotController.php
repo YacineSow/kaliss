@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/depot")
+ * @Route("/api")
  */
 class DepotController extends AbstractController
 {
@@ -30,7 +30,7 @@ class DepotController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="depot_new", methods={"GET","POST"})
+     * @Route("/depot", name="depot_new", methods={"GET","POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

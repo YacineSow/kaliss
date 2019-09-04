@@ -15,7 +15,7 @@ class PartenaireType extends AbstractType
             ->add('entreprise')
             ->add('raisonsocial')
             ->add('ninea')
-            ->add('adresse')
+            ->add('adressesociete')
             ->add('statut')
         ;
     }

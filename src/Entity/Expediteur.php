@@ -21,17 +21,17 @@ class Expediteur
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $nomexpediteur;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $prenom;
+    private $prenomexpediteur;
 
     /**
      * @ORM\Column(type="bigint")
      */
-    private $telephone;
+    private $telephoneexpediteur;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Transaction", mappedBy="expediteur")
@@ -48,38 +48,38 @@ class Expediteur
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getNomexpediteur(): ?string
     {
-        return $this->nom;
+        return $this->nomexpediteur;
     }
 
-    public function setNom(string $nom): self
+    public function setNomexpediteur(string $nomexpediteur): self
     {
-        $this->nom = $nom;
+        $this->nomexpediteur = $nomexpediteur;
 
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function getPrenomexpediteur(): ?string
     {
-        return $this->prenom;
+        return $this->prenomexpediteur;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenomexpediteur(string $prenomexpediteur): self
     {
-        $this->prenom = $prenom;
+        $this->prenomexpediteur = $prenomexpediteur;
 
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephoneexpediteur(): ?int
     {
-        return $this->telephone;
+        return $this->telephoneexpediteur;
     }
 
-    public function setTelephone(int $telephone): self
+    public function setTelephoneexpediteur(int $telephoneexpediteur): self
     {
-        $this->telephone = $telephone;
+        $this->telephoneexpediteur = $telephoneexpediteur;
 
         return $this;
     }

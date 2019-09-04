@@ -20,7 +20,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/transaction")
+ * @Route("/api")
  */
 class TransactionController extends AbstractController
 {
@@ -35,7 +35,7 @@ class TransactionController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="transaction_new", methods={"GET","POST"})
+     * @Route("/transaction", name="transaction_new", methods={"GET","POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -80,20 +80,6 @@ class TransactionController extends AbstractController
             $transaction->setCodetransaction($code);
             $user=$this->getUser();
             $transaction->setUser($user);
-            // ####################################################
-            // $repos=$this->getDoctrine()->getRepository(User::class);
-            // $user=$repos->find($values['user']);
-            // $transaction->setUser($user);
-
-            // ##########################################################
-            // $repos=$this->getDoctrine()->getRepository(Beneficiaire::class);
-            // $beneficiaire=$repos->find($values['beneficiaire']);
-            // $transaction->setBeneficiaire($beneficiaire);
-
-            // ##################################################################
-            // $repos=$this->getDoctrine()->getRepository(Expediteur::class);
-            // $expediteur=$repos->find($values['expediteur']);
-            // $transaction->setExpediteur($expediteur);
 
             // recuperer la valeur du frais
            $repository=$this->getDoctrine()->getRepository(Tarifs::class);

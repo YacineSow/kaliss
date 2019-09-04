@@ -64,10 +64,10 @@ class Partenaire extends \App\Entity\Partenaire implements \Doctrine\ORM\Proxy\P
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'entreprise', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'raisonsocial', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'adresse', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'statut', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'users', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes'];
+            return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'entreprise', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'raisonsocial', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'adressesociete', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'statut', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'users', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes'];
         }
 
-        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'entreprise', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'raisonsocial', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'adresse', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'statut', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'users', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes'];
+        return ['__isInitialized__', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'id', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'entreprise', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'raisonsocial', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'ninea', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'adressesociete', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'statut', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'users', '' . "\0" . 'App\\Entity\\Partenaire' . "\0" . 'comptes'];
     }
 
     /**
@@ -257,23 +257,23 @@ class Partenaire extends \App\Entity\Partenaire implements \Doctrine\ORM\Proxy\P
     /**
      * {@inheritDoc}
      */
-    public function getAdresse(): ?string
+    public function getAdressesociete(): ?string
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAdresse', []);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getAdressesociete', []);
 
-        return parent::getAdresse();
+        return parent::getAdressesociete();
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setAdresse(string $adresse): \App\Entity\Partenaire
+    public function setAdressesociete(string $adressesociete): \App\Entity\Partenaire
     {
 
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAdresse', [$adresse]);
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setAdressesociete', [$adressesociete]);
 
-        return parent::setAdresse($adresse);
+        return parent::setAdressesociete($adressesociete);
     }
 
     /**

@@ -17,7 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
- * @Route("/user")
+ * @Route("/api")
  */
 class UserController extends AbstractController
 {
@@ -72,10 +72,11 @@ class UserController extends AbstractController
             
             $user->setStatut("debloquer");
 
-            $repos=$this->getDoctrine()->getRepository(Partenaire::class);
-            $partenaire=$repos->find($values['partenaire']);
-            $user->setPartenaire($partenaire);                
-            $this->getUser()->getPartenaire();
+            // $repos=$this->getDoctrine()->getRepository(Partenaire::class);
+            // $partenaire=$repos->find($values['partenaire']);
+                           
+            $partenaire=$this->getUser()->getPartenaire();
+            $user->setPartenaire($partenaire); 
  
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($user);

@@ -21,17 +21,17 @@ class Beneficiaire
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nom;
+    private $nombeneficiaire;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $prenom;
+    private $prenombeneficiaire;
 
     /**
      * @ORM\Column(type="bigint")
      */
-    private $telephone;
+    private $telephonebeneficiaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Transaction", mappedBy="beneficiaire")
@@ -48,38 +48,38 @@ class Beneficiaire
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getNombeneficiaire(): ?string
     {
-        return $this->nom;
+        return $this->nombeneficiaire;
     }
 
-    public function setNom(string $nom): self
+    public function setNombeneficiaire(string $nombeneficiaire): self
     {
-        $this->nom = $nom;
+        $this->nombeneficiaire = $nombeneficiaire;
 
         return $this;
     }
 
-    public function getPrenom(): ?string
+    public function getPrenombeneficiaire(): ?string
     {
-        return $this->prenom;
+        return $this->prenombeneficiaire;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenombeneficiaire(string $prenombeneficiaire): self
     {
-        $this->prenom = $prenom;
+        $this->prenombeneficiaire = $prenombeneficiaire;
 
         return $this;
     }
 
-    public function getTelephone(): ?int
+    public function getTelephonebeneficiaire(): ?int
     {
-        return $this->telephone;
+        return $this->telephonebeneficiaire;
     }
 
-    public function setTelephone(int $telephone): self
+    public function setTelephonebeneficiaire(int $telephonebeneficiaire): self
     {
-        $this->telephone = $telephone;
+        $this->telephonebeneficiaire = $telephonebeneficiaire;
 
         return $this;
     }
