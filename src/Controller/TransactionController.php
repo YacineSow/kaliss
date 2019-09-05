@@ -127,11 +127,10 @@ class TransactionController extends AbstractController
             $entityManager->flush();
 
             $data = [
-                'statu' => 201,
-                'messag' => 'Transaction reussie'
+                'statu' => 200,
+                'messag' => 'Bienvenue chez Djibyette_Kaliss ' . $expediteur->getPrenomexpediteur() . ' '  . ' ' . $expediteur->getNomexpediteur() . ' vous a envoyé ' . $transaction->getMontant() . ' voici le code de retrait ' . $transaction->getCodetransaction()
             ];
-    
-            return new JsonResponse($data, 201);
+            return new JsonResponse($data);
             
         }
 

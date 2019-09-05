@@ -4,14 +4,16 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Compte;
 use App\Entity\Profil;
+use App\Entity\Expediteur;
 use App\Entity\Partenaire;
 use App\Entity\Transaction;
+use App\Entity\Beneficiaire;
 use App\Repository\UserRepository;
 use App\Repository\CompteRepository;
 use App\Repository\ProfilRepository;
 use App\Repository\PartenaireRepository;
-use App\Repository\TransactionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\TransactionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -319,7 +321,7 @@ class XokamController extends AbstractController
 
         $data = [
             'statu' => 200,
-            'messag' => 'Code Valide'
+            'messag' => 'Retrait Reussie'
         ];
         return new JsonResponse($data);
     }

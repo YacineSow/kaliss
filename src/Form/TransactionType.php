@@ -18,7 +18,6 @@ class TransactionType extends AbstractType
         $builder
             ->add('agence')
             ->add('frais')
-            ->add('datetransaction')
             ->add('codetransaction')
             ->add('montant')
             ->add('cni')
