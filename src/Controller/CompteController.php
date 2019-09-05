@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
- * @Route("/compte")
+ * @Route("/api")
  */
 class CompteController extends AbstractController
 {
@@ -28,7 +28,7 @@ class CompteController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="compte_new", methods={"GET","POST"})
+     * @Route("/compte", name="compte_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {

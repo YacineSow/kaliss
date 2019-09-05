@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Depot;
 use App\Entity\Compte;
+use App\Form\CompteType;
 use App\Form\DepotType;
 use App\Repository\DepotRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -35,27 +36,31 @@ class DepotController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $depot = new Depot();
+        $comptes = new Compte();
         $values=$request->request->all();
         if(($values["montant"])>=75000){
             $form = $this->createForm(DepotType::class, $depot);
+            $form1 = $this->createForm(CompteType::class, $comptes);
             $form->handleRequest($request);
-            
+            $form1->handleRequest($request);
             $form->submit($values);
+            $form1->submit($values);
     
             if ($form->isSubmitted()) {
                 $depot->setDate(new \DateTime());
 
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($depot);
-                $entityManager->flush();
+                // $entityManager->persist($depot);
+                // $entityManager->flush();
+
 
                 //recuperation de l'id du compte
             $repo=$this->getDoctrine()->getRepository(Compte::class);
-            $comptes=$repo->find($values["compte"]);
+            $comptes=$repo->findOneBy(['numcompte' => $comptes->getNumcompte()] );
             $depot->setCompte($comptes);
 
-                 $entityManager->persist($depot);
-                 $entityManager->flush();
+                //  $entityManager->persist($depot);
+                //  $entityManager->flush();
 
                 //incrementant du solde du compte
                 $comptes->setSolde($comptes->getSolde()+$values["montant"]);
