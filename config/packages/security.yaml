@@ -45,8 +45,10 @@ security:
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/api/new, roles: ROLE_ADMIN }
         - { path: ^/api/ajoutpartenaire, roles: ROLE_SUPER_ADMIN}
-        - { path: ^/depot/new, roles: ROLE_CAISSIER}
+        - { path: ^/api/compte, roles: ROLE_SUPER_ADMIN}
+        - { path: ^/api/depot, roles: ROLE_CAISSIER}
         - { path: ^/api/users/bloquer, roles: ROLE_SUPER_ADMIN}
         - { path: ^/api/users/debloquer, roles: ROLE_SUPER_ADMIN}
         - { path: ^/api/transaction, roles: ROLE_USER}
+        - { path: ^/api/retrait, roles: ROLE_USER}
         

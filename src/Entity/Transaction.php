@@ -44,7 +44,7 @@ class Transaction
     private $montant;
 
     /**
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="bigint", nullable=true)
      */
     private $cni;
 

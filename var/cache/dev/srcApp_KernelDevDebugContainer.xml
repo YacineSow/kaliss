@@ -1641,6 +1641,14 @@
         <argument>2048</argument>
       </call>
       <call method="addListener">
+        <argument>console.command</argument>
+        <argument type="collection">
+          <argument type="service" id="debug.debug_handlers_listener"/>
+          <argument>configure</argument>
+        </argument>
+        <argument>2048</argument>
+      </call>
+      <call method="addListener">
         <argument>kernel.exception</argument>
         <argument type="collection">
           <argument type="service" id="debug.debug_handlers_listener"/>
@@ -2659,7 +2667,14 @@
         <argument>null</argument>
       </call>
       <call method="add">
-        <argument type="service" id=".security.request_matcher.BDlN.QK"/>
+        <argument type="service" id=".security.request_matcher.HVHdyGR"/>
+        <argument type="collection">
+          <argument>ROLE_SUPER_ADMIN</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.ipYKN07"/>
         <argument type="collection">
           <argument>ROLE_CAISSIER</argument>
         </argument>
@@ -2681,6 +2696,13 @@
       </call>
       <call method="add">
         <argument type="service" id=".security.request_matcher.0ZJUgFv"/>
+        <argument type="collection">
+          <argument>ROLE_USER</argument>
+        </argument>
+        <argument>null</argument>
+      </call>
+      <call method="add">
+        <argument type="service" id=".security.request_matcher.qTkxyEi"/>
         <argument type="collection">
           <argument>ROLE_USER</argument>
         </argument>
@@ -3284,8 +3306,11 @@
     <service id=".security.request_matcher.5BvmyHM" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
       <argument>^/api/ajoutpartenaire</argument>
     </service>
-    <service id=".security.request_matcher.BDlN.QK" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
-      <argument>^/depot/new</argument>
+    <service id=".security.request_matcher.HVHdyGR" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/api/compte</argument>
+    </service>
+    <service id=".security.request_matcher.ipYKN07" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/api/depot</argument>
     </service>
     <service id=".security.request_matcher.0QBS5bX" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
       <argument>^/api/users/bloquer</argument>
@@ -3295,6 +3320,9 @@
     </service>
     <service id=".security.request_matcher.0ZJUgFv" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
       <argument>^/api/transaction</argument>
+    </service>
+    <service id=".security.request_matcher.qTkxyEi" class="Symfony\Component\HttpFoundation\RequestMatcher" public="false">
+      <argument>^/api/retrait</argument>
     </service>
     <service id="security.command.user_password_encoder" class="Symfony\Bundle\SecurityBundle\Command\UserPasswordEncoderCommand" public="false">
       <tag name="console.command" command="security:encode-password"/>
@@ -5555,7 +5583,15 @@
         <argument key="userRepo" type="service" id="App\Repository\UserRepository"/>
       </argument>
     </service>
-    <service id=".service_locator.FUHaOin" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+    <service id=".service_locator.7zWnKy7" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="entityManager" type="service" id="doctrine.orm.default_entity_manager"/>
+        <argument key="serializer" type="service" id="serializer"/>
+        <argument key="validator" type="service" id="validator"/>
+      </argument>
+    </service>
+    <service id=".service_locator.Wyrdyum" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection">
         <argument key="App\Controller\BeneficiaireController::delete" type="service" id=".service_locator.qiDlCDz"/>
@@ -5601,6 +5637,7 @@
         <argument key="App\Controller\XokamController::addprofil" type="service" id=".service_locator.k22NER8"/>
         <argument key="App\Controller\XokamController::login" type="service" id=".service_locator.0xDS.HG"/>
         <argument key="App\Controller\XokamController::register" type="service" id=".service_locator.H3qnu8f"/>
+        <argument key="App\Controller\XokamController::retrait" type="service" id=".service_locator.7zWnKy7"/>
         <argument key="App\Controller\XokamController::userBloquer" type="service" id=".service_locator.U2OyWts"/>
         <argument key="App\Controller\BeneficiaireController:delete" type="service" id=".service_locator.qiDlCDz"/>
         <argument key="App\Controller\BeneficiaireController:edit" type="service" id=".service_locator.qiDlCDz"/>
@@ -5645,6 +5682,7 @@
         <argument key="App\Controller\XokamController:addprofil" type="service" id=".service_locator.k22NER8"/>
         <argument key="App\Controller\XokamController:login" type="service" id=".service_locator.0xDS.HG"/>
         <argument key="App\Controller\XokamController:register" type="service" id=".service_locator.H3qnu8f"/>
+        <argument key="App\Controller\XokamController:retrait" type="service" id=".service_locator.7zWnKy7"/>
         <argument key="App\Controller\XokamController:userBloquer" type="service" id=".service_locator.U2OyWts"/>
       </argument>
     </service>
@@ -5971,12 +6009,12 @@
       <argument type="service" id="security.token_storage"/>
     </service>
     <service id="debug.argument_resolver.service.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver" public="false">
-      <argument type="service" id=".service_locator.FUHaOin"/>
+      <argument type="service" id=".service_locator.Wyrdyum"/>
     </service>
     <service id="debug.argument_resolver.default.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver" public="false"/>
     <service id="debug.argument_resolver.variadic.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\VariadicValueResolver" public="false"/>
     <service id="debug.argument_resolver.not_tagged_controller.inner" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver" public="false">
-      <argument type="service" id=".service_locator.FUHaOin"/>
+      <argument type="service" id=".service_locator.Wyrdyum"/>
     </service>
     <service id="api_platform.swagger.normalizer.api_gateway.inner" class="ApiPlatform\Core\Swagger\Serializer\DocumentationNormalizer" public="false">
       <argument type="service" id="api_platform.metadata.resource.metadata_factory.cached"/>
@@ -6364,7 +6402,7 @@
     <service id="Vich\UploaderBundle\Form\Type\VichImageType" alias="vich_uploader.form.type.image" public="false"/>
     <service id="Vich\UploaderBundle\Templating\Helper\UploaderHelper" alias="vich_uploader.templating.helper.uploader_helper" public="false"/>
     <service id="Vich\UploaderBundle\Twig\Extension\UploaderExtension" alias="vich_uploader.twig.extension.uploader" public="false"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.FUHaOin"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.Wyrdyum"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem" public="false"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="api_platform.name_converter" alias="serializer.name_converter.metadata_aware"/>

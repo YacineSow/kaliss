@@ -50,8 +50,7 @@ class DepotController extends AbstractController
                 $depot->setDate(new \DateTime());
 
                 $entityManager = $this->getDoctrine()->getManager();
-                // $entityManager->persist($depot);
-                // $entityManager->flush();
+
 
 
                 //recuperation de l'id du compte
@@ -59,8 +58,7 @@ class DepotController extends AbstractController
             $comptes=$repo->findOneBy(['numcompte' => $comptes->getNumcompte()] );
             $depot->setCompte($comptes);
 
-                //  $entityManager->persist($depot);
-                //  $entityManager->flush();
+
 
                 //incrementant du solde du compte
                 $comptes->setSolde($comptes->getSolde()+$values["montant"]);

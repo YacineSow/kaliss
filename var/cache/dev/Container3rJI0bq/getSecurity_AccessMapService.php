@@ -15,9 +15,11 @@ $this->privates['security.access_map'] = $instance = new \Symfony\Component\Secu
 
 $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/new'), [0 => 'ROLE_ADMIN'], NULL);
 $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/ajoutpartenaire'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
-$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/depot/new'), [0 => 'ROLE_CAISSIER'], NULL);
+$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/compte'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
+$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/depot'), [0 => 'ROLE_CAISSIER'], NULL);
 $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/users/bloquer'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
 $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/users/debloquer'), [0 => 'ROLE_SUPER_ADMIN'], NULL);
 $instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/transaction'), [0 => 'ROLE_USER'], NULL);
+$instance->add(new \Symfony\Component\HttpFoundation\RequestMatcher('^/api/retrait'), [0 => 'ROLE_USER'], NULL);
 
 return $instance;

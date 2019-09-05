@@ -5,10 +5,12 @@ use App\Entity\User;
 use App\Entity\Compte;
 use App\Entity\Profil;
 use App\Entity\Partenaire;
+use App\Entity\Transaction;
 use App\Repository\UserRepository;
 use App\Repository\CompteRepository;
 use App\Repository\ProfilRepository;
 use App\Repository\PartenaireRepository;
+use App\Repository\TransactionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -287,6 +289,40 @@ class XokamController extends AbstractController
         }
     }
 
+    /**
+     * @Route("/retrait", name="retrait", methods={"POST"})
+     */
+
+    public function retrait(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer, ValidatorInterface $validator){
+        $values = json_decode($request->getContent(), true);
+        $transaction = new Transaction();
+        $repo=$this->getDoctrine()->getRepository(Transaction::class);
+        $transaction=$repo->findOneBy(['codetransaction'=> $values['codetransaction']]);
+        if(!$transaction){
+            $data = [
+                'status' => 500,
+                'message' => 'Code Invalid'
+            ];
+            return new JsonResponse($data, 500);
+        }
+        elseif($transaction->getTypetransaction()=="retirer" && $transaction->getCodetransaction()== $values['codetransaction']){
+            return new Response("code deja retirer");
+        }
+        $transaction->setCni($values['cni']);
+        
+        $user=$this->getUser();
+        $transaction->setUser($user);
+        $transaction->setTypetransaction('retirer');
+
+        $entityManager->persist($transaction);
+        $entityManager->flush();
+
+        $data = [
+            'statu' => 200,
+            'messag' => 'Code Valide'
+        ];
+        return new JsonResponse($data);
+    }
     
 }
 
